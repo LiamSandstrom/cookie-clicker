@@ -1,0 +1,27 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrap-score {
+    display: flex;
+    gap: 10px;
+}
+
+.cookie {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+
