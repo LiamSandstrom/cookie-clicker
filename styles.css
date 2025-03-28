@@ -25,3 +25,39 @@ body {
     border-radius: 50px;
 }
 
+.upgrades{
+    display: flex;
+    gap: 20px;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h3, h2{
+    margin: 0;
+}
+
+button{
+    width: 100px;
+    height: 30px;
+    border-radius: 8px;
+    transition: scale 0.1s;
+}
+
+button:hover{
+    scale: 1.1;
+}
+
+button:active{
+    scale: 1;
+}
+
+.upgrades .info {
+    display: flex;
+    flex-direction: row;
+}
