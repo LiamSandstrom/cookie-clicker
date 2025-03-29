@@ -2,23 +2,24 @@ document.addEventListener("DOMContentLoaded", function() {
     let btnRef = document.getElementById("cookie");
     let h1ref = document.getElementById("score");
 
+    let price2x = 100;
+    let price1s = 50;
+    let priceXrd = 20;
+
     let multi = 1;
     let ref2x = document.getElementById("2x");
-    let price2x = 5;
     let refPrice2x = document.getElementById("price-2x");
     let info2x = document.getElementById("info-2x");
 
     let perSec = 0;
     let perSecCalled = false;
     let ref1s = document.getElementById("1s");
-    let price1s = 1;
     let refPrice1s = document.getElementById("price-1s");
     let info1s = document.getElementById("info-1s");
 
     let perXrd = 0;
     let perXrdAmount = 3;
     let refXrd = document.getElementById("Xrd");
-    let priceXrd = 4;
     let refPriceXrd = document.getElementById("price-Xrd");
     let infoXrd = document.getElementById("info-Xrd");
     let priceMulti = 1.5;
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const baseColor = getComputedStyle(btnRef).backgroundColor;
     const baseColorScore = getComputedStyle(h1ref).color;
     const critColor = "rgb(0, 255, 50)";
+    const badColor = "rgb(255, 36, 80)";
 
     begin();
 
@@ -81,8 +83,12 @@ document.addEventListener("DOMContentLoaded", function() {
     ref2x.addEventListener("click", () => {
         if(checkScore(price2x)){
             spendScore(price2x);
-            multi += 2;
+            multi += 1;
             update2x();
+            buyAnimation(ref2x);
+        }
+        else{
+            notEnoughAnimation(ref2x);
         }
     });
 
@@ -98,6 +104,10 @@ document.addEventListener("DOMContentLoaded", function() {
             perSec += 1;
             update1s();
             scorePerSec();
+            buyAnimation(ref1s);
+        }
+        else{
+            notEnoughAnimation(ref1s);
         }
     });
 
@@ -126,10 +136,14 @@ document.addEventListener("DOMContentLoaded", function() {
         if(checkScore(priceXrd)){
             spendScore(priceXrd);
             perXrd += perXrdAmount;
+            buyAnimation(refXrd);
             updateXrd();
             if(!activeXrd){
                 activeXrd = true;
             }
+        }
+        else{
+            notEnoughAnimation(refXrd);
         }
     });
 
@@ -150,6 +164,20 @@ document.addEventListener("DOMContentLoaded", function() {
         await delay(80);
         btnRef.style.transform = "scale(1)";
         h1ref.style.transform = "scale(1)";
+    }
+
+    async function buyAnimation(ref){
+        ref.style.transform = "scale(1.1)";
+        ref.style.backgroundColor = critColor;
+        await delay(200);
+        ref.style.backgroundColor = baseColorScore;
+        ref.style.transform = "scale(1)";
+    }
+
+    async function notEnoughAnimation(ref){
+        ref.style.backgroundColor = badColor;
+        await delay(160);
+        ref.style.backgroundColor = baseColorScore;
     }
 });
 
