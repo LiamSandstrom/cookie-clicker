@@ -9,19 +9,21 @@ document.addEventListener("DOMContentLoaded", function() {
     let info2x = document.getElementById("info-2x");
 
     let perSec = 0;
+    let perSecCalled = false;
     let ref1s = document.getElementById("1s");
-    let price1s = 7;
+    let price1s = 1;
     let refPrice1s = document.getElementById("price-1s");
     let info1s = document.getElementById("info-1s");
 
-    let per3rd = 0;
-    let ref3rd = document.getElementById("3rd");
-    let price3rd = 4;
-    let refPrice3rd = document.getElementById("price-3rd");
-    let info3rd = document.getElementById("info-3rd");
+    let perXrd = 0;
+    let perXrdAmount = 3;
+    let refXrd = document.getElementById("Xrd");
+    let priceXrd = 4;
+    let refPriceXrd = document.getElementById("price-Xrd");
+    let infoXrd = document.getElementById("info-Xrd");
     let priceMulti = 1.5;
-    let active3rd = false;
-    let count3rd = 0;
+    let activeXrd = false;
+    let countXrd = 0;
 
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
     const baseColor = getComputedStyle(btnRef).backgroundColor;
@@ -44,20 +46,20 @@ document.addEventListener("DOMContentLoaded", function() {
     function begin(){
         refPrice2x.textContent = price2x;
         refPrice1s.textContent = price1s;
-        refPrice3rd.textContent = price3rd;   
+        refPriceXrd.textContent = priceXrd;   
         info2x.textContent = multi;
         info1s.textContent = perSec;
-        info3rd.textContent = per3rd;
+        infoXrd.textContent = perXrd;
     }
 
 
     btnRef.addEventListener("click" , () => {
         scoreObj.score = 1 * multi;
-        if(active3rd){
-            count3rd++;
-            if(count3rd === 5){
-                scoreObj.score = per3rd * multi;
-                count3rd = 0;
+        if(activeXrd){
+            countXrd++;
+            if(countXrd === 5){
+                scoreObj.score = perXrd * multi;
+                countXrd = 0;
                 critAnimation();
             }
         }
@@ -106,26 +108,35 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     async function scorePerSec(){
-        await delay(1000);
         scoreObj.score = perSec;
-        scorePerSec();
+        if(!perSecCalled){
+            perSecCalled = true;
+            tickPerSec();
+        }
     }
 
-    ref3rd.addEventListener("click", () => {
-        if(checkScore(price3rd)){
-            spendScore(price3rd);
-            per3rd += 10;
-            update3rd();
-            if(!active3rd){
-                active3rd = true;
+    async function tickPerSec(){
+        while(true){
+            await delay(1000);
+            scorePerSec();
+        }
+    }
+
+    refXrd.addEventListener("click", () => {
+        if(checkScore(priceXrd)){
+            spendScore(priceXrd);
+            perXrd += perXrdAmount;
+            updateXrd();
+            if(!activeXrd){
+                activeXrd = true;
             }
         }
     });
 
-    function update3rd(){
-        price3rd = Math.round(price3rd * priceMulti);
-        refPrice3rd.textContent = price3rd;
-        info3rd.textContent = per3rd;
+    function updateXrd(){
+        priceXrd = Math.round(priceXrd * priceMulti);
+        refPriceXrd.textContent = priceXrd;
+        infoXrd.textContent = perXrd;
     }
 
     async function critAnimation(){
