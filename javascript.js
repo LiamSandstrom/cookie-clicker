@@ -20,8 +20,14 @@ document.addEventListener("DOMContentLoaded", function() {
     let refPrice3rd = document.getElementById("price-3rd");
     let info3rd = document.getElementById("info-3rd");
     let priceMulti = 1.5;
+    let active3rd = false;
+    let count3rd = 0;
 
     const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    const baseColor = getComputedStyle(btnRef).backgroundColor;
+    const baseColorScore = getComputedStyle(h1ref).color;
+    const critColor = "rgb(0, 255, 50)";
+
     begin();
 
     let scoreObj = {
@@ -47,6 +53,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
     btnRef.addEventListener("click" , () => {
         scoreObj.score = 1 * multi;
+        if(active3rd){
+            count3rd++;
+            if(count3rd === 5){
+                scoreObj.score = per3rd * multi;
+                count3rd = 0;
+                critAnimation();
+            }
+        }
     }
     );
 
@@ -95,6 +109,36 @@ document.addEventListener("DOMContentLoaded", function() {
         await delay(1000);
         scoreObj.score = perSec;
         scorePerSec();
+    }
+
+    ref3rd.addEventListener("click", () => {
+        if(checkScore(price3rd)){
+            spendScore(price3rd);
+            per3rd += 10;
+            update3rd();
+            if(!active3rd){
+                active3rd = true;
+            }
+        }
+    });
+
+    function update3rd(){
+        price3rd = Math.round(price3rd * priceMulti);
+        refPrice3rd.textContent = price3rd;
+        info3rd.textContent = per3rd;
+    }
+
+    async function critAnimation(){
+        btnRef.style.transform = "scale(1.15)";
+        h1ref.style.transform = "scale(1.25)";
+        btnRef.style.backgroundColor = critColor;
+        h1ref.style.color = critColor;
+        await delay(200);
+        btnRef.style.backgroundColor = baseColor;
+        h1ref.style.color = baseColorScore;
+        await delay(80);
+        btnRef.style.transform = "scale(1)";
+        h1ref.style.transform = "scale(1)";
     }
 });
 
