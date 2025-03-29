@@ -159,8 +159,10 @@ document.addEventListener("DOMContentLoaded", function() {
         btnRef.style.backgroundColor = critColor;
         h1ref.style.color = critColor;
         btnRef.style.pointerEvents = "none";
+        btnRef.disabled = true;
         await delay(100);
         btnRef.style.pointerEvents = "auto";
+        btnRef.disabled = false;
         await delay(100);
         btnRef.style.backgroundColor = baseColor;
         h1ref.style.color = baseColorScore;
