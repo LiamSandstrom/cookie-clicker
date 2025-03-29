@@ -158,7 +158,10 @@ document.addEventListener("DOMContentLoaded", function() {
         h1ref.style.transform = "scale(1.25)";
         btnRef.style.backgroundColor = critColor;
         h1ref.style.color = critColor;
-        await delay(200);
+        btnRef.style.pointerEvents = "none";
+        await delay(100);
+        btnRef.style.pointerEvents = "auto";
+        await delay(100);
         btnRef.style.backgroundColor = baseColor;
         h1ref.style.color = baseColorScore;
         await delay(80);
